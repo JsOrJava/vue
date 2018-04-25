@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{url}}</p>
+			<p>{{site.split('').reverse().join('')}}</p>
+			<p>{{alexa}}</p>
+			<input type="text" name="d" id="d" :value= "nameaa" v-if="iftrue"/>
+			<div v-html="message"></div>
+			<div v-bind:id="nameaa">dddd</div>
+			<a v-on:click.prevent="doSomething">点我</a>
+			<input v-model="nameaa" />
+			<p>{{nameaa | capitalize('da',2+3) | filterB}}</p>
+			<button @click="reverseMessage">反转字符串</button>
+			
+			<div v-if="Math.random()>1.2">
+				good
+			</div>
+			<div v-else-if="true">
+				中间就是我
+			</div>
+			<div v-else>
+				sorry
+			</div>
+			<div v-show="true">
+				中间就是我show
+			</div>
+			
+			<!--
+				v-for 遍历数组
+			-->
+			<div style="border: 1px solid red;">
+				<template v-for="ele in people">
+					<p>开始一波</p>
+					<p>{{ele.name}}</p>
+					<p>{{ele.age}}</p>
+				</template>
+			</div>
+			<div style="border: 1px solid green;">
+				<ol v-for="(value,key,index) in obj">
+					<li>{{index}}:{{key}}:  {{value}}</li>
+				</ol>
+			</div>
+			<!--
+				迭代整数
+			-->
+			<div style="border: 1px solid pink;">
+				<ol v-for="n in 10">
+					<li>{{n}}</li>
+				</ol>
+			</div>
+			<!--
+				vue.js - 计算属性
+			-->
+			<p>原始字符串: {{ message }}</p>
+  			<p>计算后反转字符串: {{ reversedMessage222() }}</p>
+		</div>
+	</body>
+</html>
+<script>
+	var data = { 
+		site: "菜鸟教程",
+		url: "www.runoob.com",
+		alexa: 10000,
+		message: '你的一哥',
+		nameaa: 'vue33',
+		iftrue: true,
+		people: [
+			{name: 'aaaa', age: 1},
+			{name: 'ddd', age: 2},
+			{name: 'ffff', age: 3}
+		],
+		obj: {
+			name: '我是刘德华',
+			age: 48
+		}
+	}
+	var vue  = new Vue({
+		el: '#app',
+		data: data,
+		methods: {
+			doSomething: function(){
+				alert("华哥真的很吊"+this.nameaa);
+			},
+			reverseMessage: function () {
+		       this.nameaa = this.nameaa.split('').reverse().join('')
+		    },
+		    // this = z指向vue的实例
+			reversedMessage222: function(message){
+			//	this.doSomething();
+				return this.message.split("").reverse().join("");
+			}
+		},
+		filters: {
+			capitalize: function(value,a,b){
+				//alert(a+"   "+b);
+				if(!value) value = "快点给我赋值啊!"
+				value = value.toString();
+				return value.charAt(0).toUpperCase()+ value.slice(1);
+			},
+			filterB: function(value){
+				return value.charAt(0)+value.charAt(1).toUpperCase()+value.slice(2)	
+			}
+		},
+		computed: {
+			// this = z指向vue的实例
+			reversedMessage: function(message){
+			//	this.doSomething();
+				return this.message.split("").reverse().join("");
+			}
+		}
+	});
+	vue.$data.message = "<h1>你的一哥</h1>";
+	document.write(vue.$data.nameaa +"fadf");
+	
+	
+</script>

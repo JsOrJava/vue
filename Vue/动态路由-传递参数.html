@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Vue 测试实例 - 华哥教程(runoob.com)</title>
+		<script src="js/vue.min.js"></script>
+		<script src="js/vue-router.js"></script>
+	</head>
+	<body>
+		<div id="la">
+			<p>
+				<router-link to="/user/foo">/user/foo</router-link>
+				<router-link to="/user/foo/aaa">/user/foo/aaa</router-link>
+				<router-link to="/user/foo/bbb">/user/foo/bbb</router-link>
+				
+				<router-link to="{name: 'lwh',params: {uid: 22}}">/user</router-link>
+			</p>
+			<router-view></router-view>
+		</div>
+		<script>
+			const user = {
+				template: '<div>'
+				+'user{{$route.params.id}}'
+				+'<router-view></router-view>'
+				+'</div>',
+				watch : {
+					'$route' (to, form){
+						console.info(to,form)
+					}
+				}
+			};
+			const UserHome = {
+				template: '<p>燥起来!!</p>'
+			}
+			const router = new VueRouter({
+				routes: [
+					{path: '/user/:id',component: user,
+						//嵌套路由
+						children: [
+					      {path: '',component: UserHome},
+					      {path: 'aaa',component: {template: '<p>燥起来aaa!!</p>'}},
+					      {path: 'bbb',component: {template: '<p>燥起来bbb!!</p>'}}
+						]
+				    },
+				    {
+				    	name: 'lwh',   //路由名称
+				    	path: '/rr/:uid',
+				    	component: {
+				    		template: '<p> 按名称获取路由 </P>'
+				    	}
+				    	
+				    }
+				
+				]
+			});
+			const app = new Vue({
+				router
+			}).$mount('#la');
+		</script>
+	</body>
+</html>

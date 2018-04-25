@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Vue 测试实例嵌套路由 - 华哥教程(runoob.com)</title>
+		<script src="js/vue.min.js"></script>
+		<script src="js/vue-router.js"></script>
+	</head>
+	<body>
+		
+		<!--
+        	作者：273179539@qq.com
+        	时间：2018-04-24
+			命名视图
+			有时候想同时（同级）展示多个视图，而不是嵌套展示，例如创建一个布局，有 sidebar（侧导航） 和 main（主内容） 两个视图，
+			这个时候命名视图就派上用场了。你可以在界面中拥有多个单独命名的视图，而不是只有一个单独的出口。如果 router-view 没有设置名字，
+			\
+			那么默认为 default。        	描述：
+			
+			=====  自己的理解
+			一个视图对应一个组件 多个视图对应多个组件
+			一个路由有多个视图 - 这样一个路由就有多个组件
+			
+			有时候，通过一个名称来标识一个路由显得更方便一些，特别是在链接一个路由，
+			或者是执行一些跳转的时候。你可以在创建 Router 实例的时候，
+			在 routes 配置中给某个路由设置名称。
+        -->
+        <p id="jj">
+        	<div style="float: left; width: 200px;height: 100px;border: 1px solid red;">
+        		<div>
+        			<router-link to="/">/</router-link>
+        			<router-link to="/user/go" >根节点</router-link></div>
+        		<div>
+        			<router-link to="/user/go/go" >在来一级</router-link></div>
+        	</div>
+        	<div style="float: left;">
+        		
+        		<router-link to="/user/go">/user/go</router-link>
+        		<router-link to="/user/go/go">/user/go/go</router-link>
+        		
+        		<router-view class="view one"></router-view>  
+	        	<router-view class="view two" name= "aa"></router-view>
+	        	<router-view class="view three" name= "bb"></router-view>
+        	</div>
+        	
+        </p>
+        <script>
+        	const foo = {template: '<div> foo就是我 </div>'};
+        	const bar = {template: '<div> bar就是你 </div>'};
+        	const baz = {template: "<div> baz就是他 </div>"};
+        	
+        	const routes = [
+        		{path: '/user/go',name:'你的一哥', components: {
+        			default: foo,
+        			aa: bar,
+        			bb: baz
+        		}},
+        		{
+        			path: '/user/go/go',name:'你的一哥aaa', components: {
+        			default: baz,
+        			aa: bar,
+        			bb: foo
+        		}}
+        	];
+        	const router = new VueRouter({
+        		mode: 'history',
+        		routes: routes
+        	});
+        	var vue = new Vue({
+        		router: router,
+        		el: '#jj'
+        	});
+        </script>
+	</body>
+</html>

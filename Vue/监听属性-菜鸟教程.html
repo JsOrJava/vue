@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<!--
+        	作者：273179539@qq.com
+        	时间：2018-04-23
+        	描述：监听属性
+        -->
+		<div id="lwhWatch">
+			  千米 : <input type = "text" v-model = "kilometers">
+    		   米 : <input type = "text" v-model = "meters">
+		</div>
+		<p id="info"></p>
+	</body>
+</html>
+<script>
+	var vue = new Vue({
+		el: "#lwhWatch",
+		data: {
+			kilometers: 0,
+			meters: 0
+		},
+		methods: {
+			
+		},
+		filters: {
+			
+		},
+		computed: {
+			
+		},
+		watch: {
+			kilometers: function(newvalue, oldvalue){
+				this.kilometers = newvalue;
+				this.meters = newvalue * 1000;
+			},
+			meters: function(newvalue, oldvalue){
+				this.kilometers = newvalue / 1000;
+				this.meters = newvalue;
+				//alert(oldvalue);
+			}
+		},
+		components: {//子组件
+			
+		}
+	});
+	// $watch 是一个实例方法
+    vue.$watch('kilometers', function (newValue, oldValue) {
+    // 这个回调将在 vm.kilometers 改变后调用
+    document.getElementById ("info").innerHTML = "修改前值为: " + oldValue + "，修改后值为: " + newValue;
+})
+</script>
